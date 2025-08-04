@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="stopwatch">
+    <h1 id="displayTime">00:00:00</h1>
+    <div class="buttons">
+        
+        <button class="pause-btn" onclick="watchStop()">
+            <i class="fas fa-pause  fa-2x"></i>  
+        </button>
+
+        <button  class="start-btn" onclick="watchStart()">
+        <i class="fas fa-play  fa-3x" ></i> 
+      </button>
+
+  <button class="reset-btn" onclick="watchReset()">
+    <i class="fas fa-rotate-left  fa-2x"></i> 
+  </button>
+
+    </div>
+  </div>
+
+
+
+  <script>
+    // طريقه مختصره بنعمل فيها ثلات متغيرات اول ماا الصفحه تبدء  هتساوي اصفار 
+    let[seconds, minutes, hours] = [0,0,0]
+
+    let displayTime = document.getElementById("displayTime")
+    // متغير  هنخزن فيه ال انتريفال 
+    let timer = null
+
+
+    function stopwatch(){
+        seconds++;
+        if(seconds == 60){
+            seconds = 0;
+            minutes++;
+            if(minutes == 60){
+                seconds = 0;
+                hours++; 
+            }
+        }
+
+        // تحسين شكل الساعه  يعني بدل ما تظهر كده >>2:5:7 هتظهر كده >>02:05:07
+        let h = hours < 10 ? "0" + hours : hours;
+        let m = minutes < 10 ? "0" + minutes : minutes;
+        let s = seconds < 10 ? "0" + seconds : seconds;
+
+
+      //  بنعمل عنصر جديد يغير محتوي h1 عشان يعرض الجديد
+        displayTime.innerHTML = h+":"+ m +":"+ s;
+    }
+ 
+    function watchStart(){
+        if(timer!=null){
+        clearInterval(timer)
+    }
+        timer = setInterval(stopwatch,1000)
+    }
+
+    function watchStop(){
+        clearInterval(timer);
+    }
+    function watchReset(){
+        clearInterval(timer);
+        
+        [seconds, minutes, hours] = [0,0,0];
+        displayTime.innerHTML = "00:00:00";
+    }
+    
+
+
+  </script>
+</body>
+</html>
